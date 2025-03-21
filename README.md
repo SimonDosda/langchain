@@ -1,6 +1,6 @@
 # LangChain Local AI Demo
 
-This project demonstrates how to use LangChain with a local AI model using the ctransformers library.
+This project demonstrates how to use LangChain with a local AI model using the ctransformers library. It provides a simple English to French translation service.
 
 ## Setup
 
@@ -29,18 +29,38 @@ pip install -r requirements.txt
 ```
 .
 ├── models/           # Directory for model files
+├── scripts/         # Demo scripts
+│   ├── __init__.py
+│   ├── model_setup.py
+│   └── translation_demo.py
 ├── config.py        # Configuration settings
-├── local_ai_demo.py # Main script
+├── run.py          # Script runner
 ├── requirements.txt # Project dependencies
 └── README.md       # This file
 ```
 
 ## Usage
 
-Run the demo script:
+Run the demos using the script runner:
+
 ```bash
-python local_ai_demo.py
+# Show available demos and usage
+python run.py
+
+# Run the translation demo
+python run.py translation
+# or
+./run.py translation
 ```
+
+The program will:
+1. Load the local AI model
+2. Present an interactive prompt
+3. Accept English text input
+4. Translate the input to French
+5. Display the translation
+
+To exit the program, type 'quit' when prompted for input.
 
 ## Notes
 

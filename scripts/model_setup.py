@@ -4,7 +4,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import os
 from config import MODEL_CONFIG, MODELS_DIR
 
-def setup_local_model():
+def setup_local_model() -> CTransformers:
     # Initialize the model with streaming output
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
     
@@ -29,17 +29,4 @@ def setup_local_model():
         callback_manager=callback_manager
     )
     
-    return llm
-
-def main():
-    print("Setting up local AI model...")
-    llm = setup_local_model()
-    
-    # Test the model
-    prompt = "What is the capital of France?"
-    print("\nTesting the model with a simple question:")
-    response = llm(prompt)
-    print("\nModel response:", response)
-
-if __name__ == "__main__":
-    main() 
+    return llm 
