@@ -1,14 +1,18 @@
-from langchain_community.llms import CTransformers
-from langchain.schema import HumanMessage, SystemMessage, BaseMessage
+from langchain_community.llms import LlamaCpp
+from langchain.prompts import ChatPromptTemplate
+from typing import List
 from config import MODELS_DIR
 from scripts.model_setup import setup_local_model
 
-def translate_to_french(llm: CTransformers, text: str) -> str:
-    messages: list[BaseMessage] = [
-        SystemMessage(content="You are a professional English to French translator. Translate the given English text to French. Only provide the translation without any additional text or explanations."),
-        HumanMessage(content=text)
-    ]
-    
+# Define the chat prompt template
+TRANSLATION_TEMPLATE = ChatPromptTemplate.from_messages([
+    ("system", "You are a professional English to French translator. Translate the given English text to French. Only provide the translation without any additional text or explanations."),
+    ("user", "{text}")
+])
+
+def translate_to_french(llm: LlamaCpp, text: str) -> str:
+    # Create the messages using the template
+    messages = TRANSLATION_TEMPLATE.format_messages(text=text)
     return llm.invoke(messages)
 
 def main() -> None:

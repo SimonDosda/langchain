@@ -1,10 +1,10 @@
-from langchain_community.llms import CTransformers
+from langchain_community.llms import LlamaCpp
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import os
 from config import MODEL_CONFIG, MODELS_DIR
 
-def setup_local_model() -> CTransformers:
+def setup_local_model() -> LlamaCpp:
     # Initialize the model with streaming output
     callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
     
@@ -19,14 +19,12 @@ def setup_local_model() -> CTransformers:
         )
     
     # Load the model
-    llm = CTransformers(
-        model=model_path,
-        model_type=MODEL_CONFIG["type"],
-        config={
-            'max_new_tokens': MODEL_CONFIG["max_new_tokens"],
-            'temperature': MODEL_CONFIG["temperature"]
-        },
-        callback_manager=callback_manager
+    llm = LlamaCpp(
+        model_path=model_path,
+        temperature=MODEL_CONFIG["temperature"],
+        max_tokens=MODEL_CONFIG["max_new_tokens"],
+        callback_manager=callback_manager,
+        verbose=True
     )
     
     return llm 
