@@ -12,8 +12,13 @@ def run_translation() -> None:
     from scripts.translation_demo import main
     main()
 
+def run_chatbot() -> None:
+    from scripts.chatbot_demo import main
+    main()
+
 AVAILABLE_DEMOS: Dict[str, Callable[[], None]] = {
     "translation": run_translation,
+    "chatbot": run_chatbot,
 }
 
 def print_usage() -> None:

@@ -18,13 +18,21 @@ def setup_local_model() -> LlamaCpp:
             "Please download the model and place it in the models directory."
         )
     
-    # Load the model
+    # Load the model with adjusted parameters
     llm = LlamaCpp(
         model_path=model_path,
         temperature=MODEL_CONFIG["temperature"],
         max_tokens=MODEL_CONFIG["max_new_tokens"],
         callback_manager=callback_manager,
-        verbose=True
+        verbose=True,
+        stop=["User:", "Human:", "Assistant:", "AI:", "\n\n"],  # Stop tokens to prevent continuing user input
+        echo=False,  # Don't echo the input
+        top_p=0.95,  # Nucleus sampling
+        repeat_penalty=1.1,  # Penalty for repeating tokens
+        n_ctx=2048,  # Context window
+        n_threads=4,  # Number of CPU threads to use
+        f16=True,  # Use half precision for better performance
+        n_batch=512  # Batch size for prompt processing
     )
     
     return llm 
